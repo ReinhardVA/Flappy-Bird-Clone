@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://bi47bhi8tseer"]
+
+[ext_resource type="Script" path="res://Scripts/UI.gd" id="1_lpxyo"]
+[ext_resource type="Texture2D" uid="uid://dedlne30e60qc" path="res://Assets/UI/message.png" id="2_4qu5o"]
+[ext_resource type="Texture2D" uid="uid://731wpu67wee8" path="res://Assets/UI/gameover.png" id="3_tl5sy"]
+
+[node name="UserInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+script = ExtResource("1_lpxyo")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 208.0
+offset_right = 304.0
+offset_bottom = 61.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameStartSprite" type="Sprite2D" parent="."]
+scale = Vector2(2.78261, 1.9176)
+texture = ExtResource("2_4qu5o")
+centered = false
+
+[node name="GameOverSprite" type="Sprite2D" parent="."]
+position = Vector2(4.76837e-07, 192)
+scale = Vector2(2.66667, 1.9176)
+texture = ExtResource("3_tl5sy")
+centered = false
+
+[node name="SpriteTimer" type="Timer" parent="."]
+wait_time = 1.5
+
+[connection signal="timeout" from="SpriteTimer" to="." method="_on_sprite_timer_timeout"]

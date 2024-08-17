@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://b418vlyjofgpx"]
+
+[ext_resource type="PackedScene" uid="uid://dpnrep4em06er" path="res://Scenes/player.tscn" id="1_rdh6y"]
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_ups7p"]
+[ext_resource type="PackedScene" uid="uid://b65eprg758hv2" path="res://Scenes/obstacle.tscn" id="3_hg5mx"]
+[ext_resource type="PackedScene" uid="uid://bi47bhi8tseer" path="res://Scenes/UI.tscn" id="4_3oaie"]
+[ext_resource type="PackedScene" uid="uid://witw5xsj1lx" path="res://Scenes/ground.tscn" id="4_36qxr"]
+[ext_resource type="Texture2D" uid="uid://dka13k4tokbso" path="res://Assets/Sprites/background-day.png" id="5_cb68m"]
+
+[sub_resource type="Curve2D" id="Curve2D_f8voy"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 648, 0, 0, 0, 0, 0, 648, 720, 0, 0, 0, 0, 648, 304, 0, 0, 0, 0, 648, 0)
+}
+point_count = 4
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_ups7p")
+obstacle_scene = ExtResource("3_hg5mx")
+
+[node name="Background-day" type="Sprite2D" parent="."]
+position = Vector2(256, 256)
+scale = Vector2(1.77778, 1)
+texture = ExtResource("5_cb68m")
+
+[node name="ground" parent="." instance=ExtResource("4_36qxr")]
+position = Vector2(0, 400)
+
+[node name="UserInterface" parent="." instance=ExtResource("4_3oaie")]
+
+[node name="Player" parent="." instance=ExtResource("1_rdh6y")]
+position = Vector2(234, 279)
+
+[node name="PipeTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_f8voy")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(648, 0)
+rotation = 1.5708
+
+[connection signal="hit" from="Player" to="." method="game_over"]
+[connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
